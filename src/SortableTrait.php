@@ -144,7 +144,7 @@ trait SortableTrait
     /**
      * Swap the order of this model with the order of another model.
      *
-     * @param \Spatie\EloquentSortable\Sortable $otherModel
+     * @param \JMauerhan\EloquentSortable\Sortable $otherModel
      *
      * @return $this
      */
@@ -166,8 +166,8 @@ trait SortableTrait
     /**
      * Swap the order of two models.
      *
-     * @param \Spatie\EloquentSortable\Sortable $model
-     * @param \Spatie\EloquentSortable\Sortable $otherModel
+     * @param \JMauerhan\EloquentSortable\Sortable $model
+     * @param \JMauerhan\EloquentSortable\Sortable $otherModel
      */
     public static function swapOrder(Sortable $model, Sortable $otherModel)
     {
