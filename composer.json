@@ -1,11 +1,11 @@
 {
-    "name": "spatie/eloquent-sortable",
+    "name": "jmauerhan/eloquent-sortable",
     "description": "Sortable behaviour for eloquent models",
-    "homepage": "https://github.com/spatie/eloquent-sortable",
+    "homepage": "https://github.com/jmauerhan/eloquent-sortable",
     "authors": [
         {
-            "name": "Freek Van der Herten",
-            "email": "freek@spatie.be"
+            "name": "Jessica Mauerhan",
+            "email": "jessicamauerhan@gmail.com"
         }
     ],
     "keywords":
@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Spatie\\EloquentSortable\\": "src/"
+            "JMauerhan\\EloquentSortable\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Spatie\\EloquentSortable\\Test\\": "tests"
+            "JMauerhan\\EloquentSortable\\Test\\": "tests"
         }
     }
 }
