@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\EloquentSortable;
+namespace JMauerhan\EloquentSortable;
 
 use ArrayAccess;
 use InvalidArgumentException;
@@ -226,13 +226,27 @@ trait SortableTrait
         return $this;
     }
 
+    public static function getSortableGroupField($model)
+    {
+        return $model->sortable['sort_by_group_column'] ?? null;
+    }
+
     /**
      * Build eloquent builder of sortable.
      *
-     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function buildSortQuery()
     {
         return static::query();
+        $query = static::query();
+
+        $model       = new static;
+        $groupColumn = static::getSortableGroupField($model);
+
+        if ($groupColumn !== null) {
+            $query = $query->where($groupColumn, $model->$groupColumn);
+        }
+
+        return $query;
     }
 }
