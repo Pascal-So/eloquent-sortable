@@ -237,7 +237,6 @@ trait SortableTrait
      */
     public function buildSortQuery()
     {
-        return static::query();
         $query = static::query();
 
         $model       = new static;
