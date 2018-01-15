@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\EloquentSortable\Test;
+namespace JMauerhan\EloquentSortable\Test;
 
 use Illuminate\Database\Schema\Blueprint;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -56,6 +56,22 @@ abstract class TestCase extends Orchestra
     {
         $this->app['db']->connection()->getSchemaBuilder()->table('dummies', function (Blueprint $table) {
             $table->softDeletes();
+        });
+    }
+
+    protected function setUpDummiesWithGroups()
+    {
+        Dummy::truncate();
+
+        $this->app['db']->connection()->getSchemaBuilder()->table('dummies', function (Blueprint $table) {
+            $table->integer('group_column')->nullable();
+        });
+
+        collect(range(1, 20))->each(function (int $i) {
+            DummyWithGroups::create([
+                'name' => $i,
+                'group_column' => $i % 3,
+            ]);
         });
     }
 }

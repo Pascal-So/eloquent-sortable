@@ -1,10 +1,10 @@
 <?php
 
-namespace Spatie\EloquentSortable\Test;
+namespace JMauerhan\EloquentSortable\Test;
 
-use Spatie\EloquentSortable\Sortable;
+use JMauerhan\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\EloquentSortable\SortableTrait;
+use JMauerhan\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DummyWithSoftDeletes extends Model implements Sortable

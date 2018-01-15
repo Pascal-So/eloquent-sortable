@@ -226,24 +226,34 @@ trait SortableTrait
         return $this;
     }
 
-    public static function getSortableGroupField($model)
+    /*
+     * Determine the column name of the group column, null to disable grouping.
+     */
+    protected function determineGroupColumnName()
     {
-        return $model->sortable['sort_by_group_column'] ?? null;
+        if (
+            isset($this->sortable['sort_by_group_column']) &&
+            ! empty($this->sortable['sort_by_group_column'])
+        ) {
+            return $this->sortable['sort_by_group_column'];
+        }
+
+        return null;
     }
 
     /**
      * Build eloquent builder of sortable.
      *
+     * @param mixed $group
      */
     public function buildSortQuery()
     {
         $query = static::query();
 
-        $model       = new static;
-        $groupColumn = static::getSortableGroupField($model);
+        $groupColumn = $this->determineGroupColumnName();
 
         if ($groupColumn !== null) {
-            $query = $query->where($groupColumn, $model->$groupColumn);
+            $query = $query->where($groupColumn, $this->$groupColumn);
         }
 
         return $query;

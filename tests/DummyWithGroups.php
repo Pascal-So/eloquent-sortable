@@ -2,15 +2,15 @@
 
 namespace JMauerhan\EloquentSortable\Test;
 
+use JMauerhan\EloquentSortable\Test\Dummy;
+
 use JMauerhan\EloquentSortable\Sortable;
 use Illuminate\Database\Eloquent\Model;
 use JMauerhan\EloquentSortable\SortableTrait;
 
-class Dummy extends Model implements Sortable
+class DummyWithGroups extends Dummy
 {
-    use SortableTrait;
-
-    protected $table = 'dummies';
-    protected $guarded = [];
-    public $timestamps = false;
+    public $sortable = [
+        'sort_by_group_column' => 'group_column',
+    ];
 }

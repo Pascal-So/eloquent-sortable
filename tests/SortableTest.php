@@ -1,6 +1,6 @@
 <?php
 
-namespace Spatie\EloquentSortable\Test;
+namespace JMauerhan\EloquentSortable\Test;
 
 use Illuminate\Support\Collection;
 
@@ -266,5 +266,63 @@ class SortableTest extends TestCase
                 $this->assertEquals($order, $newModels[$key]);
             }
         }
+    }
+
+    /** @test */
+    public function it_sets_the_order_column_on_creation_with_groups()
+    {
+        $this->setUpDummiesWithGroups();
+
+        foreach (DummyWithGroups::all() as $dummy) {
+            $this->assertEquals((int) (((int) $dummy->name + 2) / 3), $dummy->order_column);
+        }
+    }
+
+    /** @test */
+    public function it_only_moves_up_within_the_group()
+    {
+        $this->setUpDummiesWithGroups();
+
+        $firstModel = DummyWithGroups::find(3);
+        $secondModel = DummyWithGroups::find(6);
+        $otherGroupModel = DummyWithGroups::find(5);
+
+        $this->assertEquals($firstModel->order_column, 1);
+        $this->assertEquals($secondModel->order_column, 2);
+        $otherGroupModelOrder = $otherGroupModel->order_column;
+
+        $this->assertNotFalse($secondModel->moveOrderUp());
+
+        $firstModel = DummyWithGroups::find(3);
+        $secondModel = DummyWithGroups::find(6);
+        $otherGroupModel = DummyWithGroups::find(5);
+
+        $this->assertEquals($firstModel->order_column, 2);
+        $this->assertEquals($secondModel->order_column, 1);
+        $this->assertEquals($otherGroupModel->order_column, $otherGroupModelOrder);
+    }
+
+    /** @test */
+    public function it_only_moves_down_within_the_group()
+    {
+        $this->setUpDummiesWithGroups();
+
+        $firstModel = DummyWithGroups::find(3);
+        $secondModel = DummyWithGroups::find(6);
+        $otherGroupModel = DummyWithGroups::find(5);
+
+        $this->assertEquals($firstModel->order_column, 1);
+        $this->assertEquals($secondModel->order_column, 2);
+        $otherGroupModelOrder = $otherGroupModel->order_column;
+
+        $this->assertNotFalse($firstModel->moveOrderDown());
+
+        $firstModel = DummyWithGroups::find(3);
+        $secondModel = DummyWithGroups::find(6);
+        $otherGroupModel = DummyWithGroups::find(5);
+
+        $this->assertEquals($firstModel->order_column, 2);
+        $this->assertEquals($secondModel->order_column, 1);
+        $this->assertEquals($otherGroupModel->order_column, $otherGroupModelOrder);
     }
 }
